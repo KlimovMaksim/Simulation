@@ -3,22 +3,12 @@ package ru.klimov.simulation.entities;
 import ru.klimov.simulation.Coordinate;
 
 abstract public class Creature extends Entity{
-    public final int maxHp;
-    protected int curHp;
+    public final int maximumHealPoints = 10;
+    protected int currentHealPoints;
 
-    public Creature(Coordinate coordinate, Symbols symbol, int maxHp) {
-        super(coordinate, symbol);
-        this.maxHp = maxHp;
-        this.curHp = maxHp;
+    public Creature(Coordinate coordinate) {
+        super(coordinate);
     }
 
-    abstract protected void makeMove(CreaturesMoves creaturesMove);
-
-    public int getCurHp() {
-        return curHp;
-    }
-
-    public void setCurHp(int curHp) {
-        this.curHp = curHp;
-    }
+    abstract protected void makeMove();
 }
