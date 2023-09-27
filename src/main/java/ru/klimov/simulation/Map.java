@@ -5,6 +5,8 @@ import ru.klimov.simulation.entities.*;
 import java.util.HashMap;
 
 public class Map {
+    public final int maximumRows = 20;
+    public final int maximumColumns = 20;
     HashMap<Coordinate, Entity> entities  = new HashMap<>();
 
     public void setEntity(Coordinate coordinate, Entity entity){

@@ -1,8 +1,6 @@
 package ru.klimov.simulation;
 
 public class Coordinate {
-    public static final int maximumRows = 20;
-    public static final int maximumColumns = 20;
     public final int row;
     public final int column;
 
