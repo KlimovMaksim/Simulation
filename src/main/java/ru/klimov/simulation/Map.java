@@ -27,7 +27,7 @@ public class Map {
         setEntity(new Coordinate(4, 15), new Predator(new Coordinate(4, 15)));
         setEntity(new Coordinate(15, 9), new Rock(new Coordinate(15, 9)));
         setEntity(new Coordinate(10, 3), new Grass(new Coordinate(10, 3)));
-        setEntity(new Coordinate(12, 7), new Tree(new Coordinate(12, 7)));
+        setEntity(new Coordinate(1, 2), new Tree(new Coordinate(1, 2)));
         setEntity(new Coordinate(17, 2), new Tree(new Coordinate(17, 2)));
     }
 }
