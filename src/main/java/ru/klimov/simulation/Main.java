@@ -5,6 +5,9 @@ public class Main {
         Map map = new Map();
         map.setupDefaultEntitiesPositions();
 
+        MapRenderer mapRenderer = new MapRenderer();
+        mapRenderer.render(map);
+
         int a = 123;
     }
 }

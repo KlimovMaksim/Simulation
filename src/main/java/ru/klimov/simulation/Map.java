@@ -22,6 +22,16 @@ public class Map {
         return !entities.containsKey(coordinate);
     }
 
+    public void removeEntity(Coordinate coordinate){
+        entities.remove(coordinate);
+    }
+
+    public void moveEntity(Coordinate from, Coordinate to){
+        Entity entity = getEntity(from);
+        removeEntity(from);
+        setEntity(to, entity);
+    }
+
     public void setupDefaultEntitiesPositions(){
         setEntity(new Coordinate(2, 7), new Herbivore(new Coordinate(2, 7)));
         setEntity(new Coordinate(4, 15), new Predator(new Coordinate(4, 15)));

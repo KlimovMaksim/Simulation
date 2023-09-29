@@ -5,6 +5,7 @@ import ru.klimov.simulation.Coordinate;
 public class Herbivore extends Creature{
     public Herbivore(Coordinate coordinate) {
         super(coordinate);
+        speed = 1;
     }
 
     @Override
