@@ -14,6 +14,18 @@ public class Coordinate {
                 this.column + shiftCoordinate.shiftColumn);
     }
 
+    public boolean canShift(ShiftCoordinate shiftCoordinate, Map map){
+        int row = this.row + shiftCoordinate.shiftRow;
+        int column = this.column + shiftCoordinate.shiftColumn;
+
+        if ((row < 1) || (row > map.maximumRows)) return false;
+        if ((column < 1) || (column > map.maximumColumns)) return false;
+
+        // is way clear?
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
