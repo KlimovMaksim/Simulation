@@ -9,6 +9,11 @@ public class Coordinate {
         this.column = column;
     }
 
+    public Coordinate shift(ShiftCoordinate shiftCoordinate){
+        return new Coordinate(this.row + shiftCoordinate.shiftRow,
+                this.column + shiftCoordinate.shiftColumn);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
