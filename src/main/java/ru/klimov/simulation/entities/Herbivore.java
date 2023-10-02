@@ -1,6 +1,9 @@
 package ru.klimov.simulation.entities;
 
 import ru.klimov.simulation.Coordinate;
+import ru.klimov.simulation.ShiftCoordinate;
+
+import java.util.Set;
 
 public class Herbivore extends Creature{
     public Herbivore(Coordinate coordinate) {
@@ -9,7 +12,12 @@ public class Herbivore extends Creature{
     }
 
     @Override
-    protected void makeMove() {
+    public void makeMove() {
 
+    }
+
+    @Override
+    protected Set<ShiftCoordinate> getEntityMoves() {
+        return null;
     }
 }

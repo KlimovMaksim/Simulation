@@ -10,7 +10,7 @@ public abstract class Creature extends Entity {
     public final int maximumHealPoints = 10;
     protected int currentHealPoints = maximumHealPoints;
     protected int speed;
-    protected Class<Entity> target;
+    protected Class target;
 
     public Creature(Coordinate coordinate) {
         super(coordinate);
@@ -31,7 +31,7 @@ public abstract class Creature extends Entity {
         while (!searchQueueCoordinates.isEmpty()){
             Coordinate selectedCoordinate = searchQueueCoordinates.pollFirst();
             if (!searchedCoordinates.contains(selectedCoordinate)){
-                if (isTargetNear(selectedCoordinate)){
+                if (isTargetNear(selectedCoordinate, map)){
                     // return
                 }
                 else {
@@ -45,12 +45,31 @@ public abstract class Creature extends Entity {
         }
     }
 
+    private boolean isTargetNear(Coordinate selectedCoordinate, Map map) {
+        for (int r = -1; r <= 1; r++) {
+            for (int c = 0; c <= 1; c++) {
+                if ((r == 0) && (c == 0)){
+                    continue;
+                }
+
+                if (map.getEntity(new Coordinate(
+                        selectedCoordinate.row + r,
+                        selectedCoordinate.column + c
+                )).getClass() == target){
+
+                }
+            }
+        }
+
+        return false;
+    }
+
     protected Set<Coordinate> getAvailableMoves(Map map, Coordinate selectedCoordinate) {
         Set<Coordinate> result = new HashSet<>();
 
         for (ShiftCoordinate shift: getEntityMoves()) {
             if (selectedCoordinate.canShift(shift, map)){
-                Coordinate newCoordinate = selectedCoordinate.shift(shift);
+                Coordinate newCoordinate = selectedCoordinate.convertShiftToCoordinate(shift);
 
                 if (map.isCellEmpty(newCoordinate)) result.add(newCoordinate);
             }
