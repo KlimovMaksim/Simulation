@@ -9,7 +9,7 @@ public class Coordinate {
         this.column = column;
     }
 
-    public Coordinate shift(ShiftCoordinate shiftCoordinate){
+    public Coordinate convertShiftToCoordinate(ShiftCoordinate shiftCoordinate){
         return new Coordinate(this.row + shiftCoordinate.shiftRow,
                 this.column + shiftCoordinate.shiftColumn);
     }
@@ -20,8 +20,36 @@ public class Coordinate {
 
         if ((row < 1) || (row > map.maximumRows)) return false;
         if ((column < 1) || (column > map.maximumColumns)) return false;
+        if (isWayClear(shiftCoordinate, map)) return false;
 
-        // is way clear?
+        return true;
+    }
+
+    private boolean isWayClear(ShiftCoordinate shift, Map map){
+        int rowAbsoluteValue = Math.abs(shift.shiftRow);
+        int columnAbsoluteValue = Math.abs(shift.shiftColumn);
+        int tempRow = shift.shiftRow;
+        int tempColumn = shift.shiftColumn;
+
+        while ((rowAbsoluteValue > 0) || (columnAbsoluteValue > 0)){
+            if (!map.isCellEmpty(convertShiftToCoordinate(new ShiftCoordinate(tempRow, tempColumn)))){
+                return false;
+            }
+            
+            if (tempRow > 0){
+                tempRow -= 1;
+            } else if (tempRow < 0) {
+                tempRow += 1;
+            }
+            if (tempColumn > 0){
+                tempColumn -= 1;
+            } else if (tempColumn < 0) {
+                tempColumn += 1;
+            }
+
+            if (rowAbsoluteValue > 0) rowAbsoluteValue -= 1;
+            if (columnAbsoluteValue > 0) columnAbsoluteValue -= 1;
+        }
 
         return true;
     }
