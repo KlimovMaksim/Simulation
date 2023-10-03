@@ -20,7 +20,7 @@ public class Coordinate {
 
         if ((row < 1) || (row > map.maximumRows)) return false;
         if ((column < 1) || (column > map.maximumColumns)) return false;
-        if (isWayClear(shiftCoordinate, map)) return false;
+        if (!isWayClear(shiftCoordinate, map)) return false;
 
         return true;
     }
@@ -32,6 +32,7 @@ public class Coordinate {
         int tempColumn = shift.shiftColumn;
 
         while ((rowAbsoluteValue > 0) || (columnAbsoluteValue > 0)){
+
             if (!map.isCellEmpty(convertShiftToCoordinate(new ShiftCoordinate(tempRow, tempColumn)))){
                 return false;
             }
