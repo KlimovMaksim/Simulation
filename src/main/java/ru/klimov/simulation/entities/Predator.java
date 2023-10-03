@@ -11,6 +11,7 @@ public class Predator extends Creature{
     public Predator(Coordinate coordinate) {
         super(coordinate);
         speed = 2;
+        // target
     }
 
     @Override

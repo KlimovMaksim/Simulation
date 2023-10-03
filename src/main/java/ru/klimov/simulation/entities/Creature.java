@@ -31,7 +31,7 @@ public abstract class Creature extends Entity {
         while (!searchQueueCoordinates.isEmpty()){
             Coordinate selectedCoordinate = searchQueueCoordinates.pollFirst();
             if (!searchedCoordinates.contains(selectedCoordinate)){
-                if (isTargetNear(selectedCoordinate, map)){
+                if (isTargetNear(selectedCoordinate, map) != null){
                     // return
                 }
                 else {
@@ -45,23 +45,25 @@ public abstract class Creature extends Entity {
         }
     }
 
-    private boolean isTargetNear(Coordinate selectedCoordinate, Map map) {
+    public Entity isTargetNear(Coordinate selectedCoordinate, Map map) {
         for (int r = -1; r <= 1; r++) {
-            for (int c = 0; c <= 1; c++) {
+            for (int c = -1; c <= 1; c++) {
                 if ((r == 0) && (c == 0)){
                     continue;
                 }
 
-                if (map.getEntity(new Coordinate(
+                Entity possibleTarget = map.getEntity(new Coordinate(
                         selectedCoordinate.row + r,
                         selectedCoordinate.column + c
-                )).getClass() == target){
+                ));
 
+                if (possibleTarget.getClass() == target){
+                    return possibleTarget;
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
     protected Set<Coordinate> getAvailableMoves(Map map, Coordinate selectedCoordinate) {
