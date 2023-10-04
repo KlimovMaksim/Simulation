@@ -18,34 +18,59 @@ public abstract class Creature extends Entity {
 
     public abstract void makeMove();
 
-    protected void findWayToTarget(Map map){
+    public Stack<Coordinate> findWayToTarget(Map map){
         LinkedList<Coordinate> searchQueueCoordinates = new LinkedList<>();
-        HashSet<Coordinate> searchedCoordinates = new HashSet<>();
-        HashMap<Coordinate, Coordinate> callTable = new HashMap<>(); // key - from; value - to
+        HashSet<Coordinate> visitedCoordinates = new HashSet<>();
+        HashMap<Coordinate, Coordinate> callTable = new HashMap<>(); // key - to; value - from
+        Stack<Coordinate> pathToTarget;
+        Coordinate startCoordinate = coordinate;
+        Coordinate endCoordinate = null;
 
         for (Coordinate c: getAvailableMoves(map, coordinate)) {
             searchQueueCoordinates.offerLast(c);
-            callTable.put(coordinate, c);
+            callTable.putIfAbsent(c, coordinate);
         }
+        visitedCoordinates.add(coordinate);
 
         while (!searchQueueCoordinates.isEmpty()){
             Coordinate selectedCoordinate = searchQueueCoordinates.pollFirst();
-            if (!searchedCoordinates.contains(selectedCoordinate)){
-                if (isTargetNear(selectedCoordinate, map) != null){
-                    // return
+
+            if (!visitedCoordinates.contains(selectedCoordinate)){
+                if (isTargetNear(selectedCoordinate, map)){
+                    endCoordinate = selectedCoordinate;
+                    break;
                 }
                 else {
-                    searchedCoordinates.add(selectedCoordinate);
                     for (Coordinate c: getAvailableMoves(map, selectedCoordinate)) {
                         searchQueueCoordinates.offerLast(c);
-                        callTable.put(selectedCoordinate, c);
+                        callTable.putIfAbsent(c, selectedCoordinate);
                     }
+                    visitedCoordinates.add(selectedCoordinate);
                 }
             }
         }
+
+        pathToTarget = reconstructWayToTarget(callTable, startCoordinate, endCoordinate);
+        return pathToTarget;
     }
 
-    public Entity isTargetNear(Coordinate selectedCoordinate, Map map) {
+    private Stack<Coordinate> reconstructWayToTarget(HashMap<Coordinate, Coordinate> callTable,
+                                                    Coordinate start,
+                                                    Coordinate end) {
+        Stack<Coordinate> pathToTarget = new Stack<>();
+
+        Coordinate temp = callTable.get(end);
+        pathToTarget.push(end);
+
+        while (!temp.equals(start)) {
+            pathToTarget.push(temp);
+            temp = callTable.get(temp);
+        }
+
+        return pathToTarget;
+    }
+
+    private boolean isTargetNear(Coordinate selectedCoordinate, Map map) {
         for (int r = -1; r <= 1; r++) {
             for (int c = -1; c <= 1; c++) {
                 if ((r == 0) && (c == 0)){
@@ -56,17 +81,17 @@ public abstract class Creature extends Entity {
                         selectedCoordinate.row + r,
                         selectedCoordinate.column + c
                 ));
-
+                if (possibleTarget == null) continue;
                 if (possibleTarget.getClass() == target){
-                    return possibleTarget;
+                    return true;
                 }
             }
         }
 
-        return null;
+        return false;
     }
 
-    protected Set<Coordinate> getAvailableMoves(Map map, Coordinate selectedCoordinate) {
+    private Set<Coordinate> getAvailableMoves(Map map, Coordinate selectedCoordinate) {
         Set<Coordinate> result = new HashSet<>();
 
         for (ShiftCoordinate shift: getEntityMoves()) {
@@ -80,7 +105,17 @@ public abstract class Creature extends Entity {
         return result;
     }
 
-    // make not abstract
-    protected abstract Set<ShiftCoordinate> getEntityMoves();
+    private Set<ShiftCoordinate> getEntityMoves(){
+        return new HashSet<>(Arrays.asList(
+                new ShiftCoordinate(speed, speed),
+                new ShiftCoordinate(0, speed),
+                new ShiftCoordinate(-speed, speed),
+                new ShiftCoordinate(-speed, 0),
+                new ShiftCoordinate(-speed, -speed),
+                new ShiftCoordinate(0, -speed),
+                new ShiftCoordinate(speed, -speed),
+                new ShiftCoordinate(speed, 0)
+        ));
+    }
 }
 
