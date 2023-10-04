@@ -18,6 +18,10 @@ public class Map {
         return entities.get(coordinate);
     }
 
+    public Entity getEntity(int row, int column){
+        return getEntity(new Coordinate(row, column));
+    }
+
     public boolean isCellEmpty(Coordinate coordinate){
         return !entities.containsKey(coordinate);
     }
@@ -34,10 +38,18 @@ public class Map {
 
     public void setupDefaultEntitiesPositions(){
         setEntity(new Coordinate(2, 7), new Herbivore(new Coordinate(2, 7)));
+        setEntity(new Coordinate(6, 11), new Grass(new Coordinate(6, 11)));
         setEntity(new Coordinate(4, 15), new Predator(new Coordinate(4, 15)));
         setEntity(new Coordinate(15, 9), new Rock(new Coordinate(15, 9)));
-        setEntity(new Coordinate(10, 3), new Grass(new Coordinate(10, 3)));
+
+        setEntity(new Coordinate(3, 7), new Rock(new Coordinate(3, 7)));
+        setEntity(new Coordinate(3, 8), new Rock(new Coordinate(3, 8)));
+        setEntity(new Coordinate(2, 8), new Rock(new Coordinate(2, 8)));
+
         setEntity(new Coordinate(1, 2), new Tree(new Coordinate(1, 2)));
         setEntity(new Coordinate(17, 2), new Tree(new Coordinate(17, 2)));
+        setEntity(new Coordinate(2, 1), new Rock(new Coordinate(2, 1)));
+        setEntity(new Coordinate(2, 2), new Rock(new Coordinate(2, 2)));
+        setEntity(new Coordinate(2, 3), new Rock(new Coordinate(2, 3)));
     }
 }
