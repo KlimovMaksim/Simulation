@@ -37,9 +37,9 @@ public class Map {
     }
 
     public void setupDefaultEntitiesPositions(){
-        setEntity(new Coordinate(2, 7), new Herbivore(new Coordinate(2, 7)));
+        setEntity(new Coordinate(2, 7), new Herbivore(new Coordinate(2, 7), this));
         setEntity(new Coordinate(6, 11), new Grass(new Coordinate(6, 11)));
-        setEntity(new Coordinate(4, 15), new Predator(new Coordinate(4, 15)));
+        setEntity(new Coordinate(4, 15), new Predator(new Coordinate(4, 15), this));
         setEntity(new Coordinate(15, 9), new Rock(new Coordinate(15, 9)));
 
         setEntity(new Coordinate(3, 7), new Rock(new Coordinate(3, 7)));
