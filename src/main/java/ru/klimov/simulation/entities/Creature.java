@@ -18,7 +18,9 @@ public abstract class Creature extends Entity {
 
     public abstract void makeMove();
 
+    // TODO: make method smaller
     public Stack<Coordinate> findWayToTarget(Map map){
+        // TODO: make initialize method
         LinkedList<Coordinate> searchQueueCoordinates = new LinkedList<>();
         HashSet<Coordinate> visitedCoordinates = new HashSet<>();
         HashMap<Coordinate, Coordinate> callTable = new HashMap<>(); // key - to; value - from
@@ -26,6 +28,7 @@ public abstract class Creature extends Entity {
         Coordinate startCoordinate = coordinate;
         Coordinate endCoordinate = null;
 
+        // TODO: delegate to separate method
         for (Coordinate c: getAvailableMoves(map, coordinate)) {
             searchQueueCoordinates.offerLast(c);
             callTable.putIfAbsent(c, coordinate);
@@ -41,6 +44,7 @@ public abstract class Creature extends Entity {
                     break;
                 }
                 else {
+                    // TODO: delegate to separate method
                     for (Coordinate c: getAvailableMoves(map, selectedCoordinate)) {
                         searchQueueCoordinates.offerLast(c);
                         callTable.putIfAbsent(c, selectedCoordinate);
@@ -54,11 +58,13 @@ public abstract class Creature extends Entity {
         return pathToTarget;
     }
 
+    // TODO: make less arguments
     private Stack<Coordinate> reconstructWayToTarget(HashMap<Coordinate, Coordinate> callTable,
                                                     Coordinate start,
                                                     Coordinate end) {
         Stack<Coordinate> pathToTarget = new Stack<>();
 
+        // TODO: try to use do-while
         Coordinate temp = callTable.get(end);
         pathToTarget.push(end);
 
@@ -69,6 +75,7 @@ public abstract class Creature extends Entity {
 
         return pathToTarget;
     }
+
 
     private boolean isTargetNear(Coordinate selectedCoordinate, Map map) {
         for (int r = -1; r <= 1; r++) {
