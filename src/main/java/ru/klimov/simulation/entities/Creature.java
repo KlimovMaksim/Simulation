@@ -24,78 +24,10 @@ public abstract class Creature extends Entity {
         return target;
     }
 
-    //public Stack<Coordinate> findWayToTarget(Map map){
-    //     LinkedList<Coordinate> searchQueueCoordinates = new LinkedList<>();
-    //     HashSet<Coordinate> visitedCoordinates = new HashSet<>();
-    //     HashMap<Coordinate, Coordinate> callTable = new HashMap<>(); // key - to; value - from
-    //     Stack<Coordinate> pathToTarget;
-    //     Coordinate startCoordinate = coordinate;
-    //     Coordinate endCoordinate = null;
-    //
-    //     for (Coordinate c: getAvailableMoves(map, coordinate)) {
-    //         searchQueueCoordinates.offerLast(c);
-    //         callTable.putIfAbsent(c, coordinate);
-    //     }
-    //     visitedCoordinates.add(coordinate);
-    //
-    //     while (!searchQueueCoordinates.isEmpty()){
-    //         Coordinate selectedCoordinate = searchQueueCoordinates.pollFirst();
-    //
-    //         if (!visitedCoordinates.contains(selectedCoordinate)){
-    //             if (isTargetNear(selectedCoordinate, map)){
-    //                 endCoordinate = selectedCoordinate;
-    //                 break;
-    //             }
-    //             else {
-    //                 for (Coordinate c: getAvailableMoves(map, selectedCoordinate)) {
-    //                     searchQueueCoordinates.offerLast(c);
-    //                     callTable.putIfAbsent(c, selectedCoordinate);
-    //                 }
-    //                 visitedCoordinates.add(selectedCoordinate);
-    //             }
-    //         }
-    //     }
-    //
-    //     pathToTarget = reconstructWayToTarget(callTable, startCoordinate, endCoordinate);
-    //     return pathToTarget;
-    // }
-
-    //private Stack<Coordinate> reconstructWayToTarget(HashMap<Coordinate, Coordinate> callTable,
-    //                                                 Coordinate start,
-    //                                                 Coordinate end) {
-    //     Stack<Coordinate> pathToTarget = new Stack<>();
-    //
-    //     Coordinate temp = callTable.get(end);
-    //     pathToTarget.push(end);
-    //
-    //     while (!temp.equals(start)) {
-    //         pathToTarget.push(temp);
-    //         temp = callTable.get(temp);
-    //     }
-    //
-    //     return pathToTarget;
-    // }
-
-    //private boolean isTargetNear(Coordinate selectedCoordinate, Map map) {
-    //     for (int r = -1; r <= 1; r++) {
-    //         for (int c = -1; c <= 1; c++) {
-    //             if ((r == 0) && (c == 0)){
-    //                 continue;
-    //             }
-    //
-    //             Entity possibleTarget = map.getEntity(new Coordinate(
-    //                     selectedCoordinate.row + r,
-    //                     selectedCoordinate.column + c
-    //             ));
-    //             if (possibleTarget == null) continue;
-    //             if (possibleTarget.getClass() == target){
-    //                 return true;
-    //             }
-    //         }
-    //     }
-    //
-    //     return false;
-    // }
+    public Stack<Coordinate> findWayToTarget(Map map){
+        breadthFirstSearch = new BreadthFirstSearch(this, map);
+        return breadthFirstSearch.startSearchEngine();
+    }
 
     public Set<Coordinate> getAvailableMoves(Map map, Coordinate selectedCoordinate) {
         Set<Coordinate> result = new HashSet<>();
