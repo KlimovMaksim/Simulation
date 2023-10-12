@@ -14,9 +14,8 @@ public abstract class Creature extends Entity {
     protected Class target;
     protected BreadthFirstSearch breadthFirstSearch;
 
-    public Creature(Coordinate coordinate, Map map) {
+    public Creature(Coordinate coordinate) {
         super(coordinate);
-        breadthFirstSearch = new BreadthFirstSearch(this,map);
     }
 
     public abstract void makeMove();
@@ -100,7 +99,6 @@ public abstract class Creature extends Entity {
 
     public Set<Coordinate> getAvailableMoves(Map map, Coordinate selectedCoordinate) {
         Set<Coordinate> result = new HashSet<>();
-
         for (ShiftCoordinate shift: getEntityMoves()) {
             if (selectedCoordinate.canShift(shift, map)){
                 Coordinate newCoordinate = selectedCoordinate.convertShiftToCoordinate(shift);
@@ -108,7 +106,6 @@ public abstract class Creature extends Entity {
                 if (map.isCellEmpty(newCoordinate)) result.add(newCoordinate);
             }
         }
-
         return result;
     }
 

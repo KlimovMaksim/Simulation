@@ -4,8 +4,8 @@ import ru.klimov.simulation.Coordinate;
 import ru.klimov.simulation.Map;
 
 public class Herbivore extends Creature{
-    public Herbivore(Coordinate coordinate, Map map) {
-        super(coordinate, map);
+    public Herbivore(Coordinate coordinate) {
+        super(coordinate);
         speed = 1;
         target = Grass.class;
     }
