@@ -11,7 +11,7 @@ public abstract class Creature extends Entity {
     public final int maximumHealPoints = 10;
     protected int currentHealPoints = maximumHealPoints;
     protected int speed;
-    protected Class target;
+    protected Class targetEntity;
     protected BreadthFirstSearch breadthFirstSearch;
 
     public Creature(Coordinate coordinate) {
@@ -20,13 +20,33 @@ public abstract class Creature extends Entity {
 
     public abstract void makeMove();
 
-    public Class getTarget() {
-        return target;
+    public Class getTargetEntity() {
+        return targetEntity;
     }
 
     public Stack<Coordinate> findWayToTarget(Map map){
         breadthFirstSearch = new BreadthFirstSearch(this, map);
         return breadthFirstSearch.startSearchEngine();
+    }
+
+    public boolean isTargetNear(Map map, Coordinate selectedCoordinate){
+        for (int r = -1; r <= 1; r++) {
+            for (int c = -1; c <= 1; c++) {
+                // is current coordinate equals selected one
+                if ((r == 0) && (c == 0)){
+                    continue;
+                }
+                Entity possibleTarget = map.getEntity(new Coordinate(
+                        selectedCoordinate.row + r,
+                        selectedCoordinate.column + c
+                ));
+                if (possibleTarget == null) continue;
+                if (possibleTarget.getClass() == targetEntity){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Set<Coordinate> getAvailableMoves(Map map, Coordinate selectedCoordinate) {

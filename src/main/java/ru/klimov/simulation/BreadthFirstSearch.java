@@ -1,7 +1,6 @@
 package ru.klimov.simulation;
 
 import ru.klimov.simulation.entities.Creature;
-import ru.klimov.simulation.entities.Entity;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,28 +23,8 @@ public class BreadthFirstSearch {
         this.endCoordinate = null;
         this.selectedCoordinate = null;
         this.selectedCreature = creature;
-        this.targetEntity = creature.getTarget();
+        this.targetEntity = creature.getTargetEntity();
         this.gameMap = gameMap;
-    }
-
-    private boolean isTargetNear(){
-        for (int r = -1; r <= 1; r++) {
-            for (int c = -1; c <= 1; c++) {
-                // is current coordinate equals selected one
-                if ((r == 0) && (c == 0)){
-                    continue;
-                }
-                Entity possibleTarget = gameMap.getEntity(new Coordinate(
-                        selectedCoordinate.row + r,
-                        selectedCoordinate.column + c
-                ));
-                if (possibleTarget == null) continue;
-                if (possibleTarget.getClass() == targetEntity){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private Stack<Coordinate> reconstructWayToTarget() {
@@ -73,7 +52,7 @@ public class BreadthFirstSearch {
         while (!searchQueueCoordinates.isEmpty()){
             selectedCoordinate = searchQueueCoordinates.pollFirst();
             if (!visitedCoordinates.contains(selectedCoordinate)){
-                if (isTargetNear()){
+                if (selectedCreature.isTargetNear(gameMap, selectedCoordinate)){
                     endCoordinate = selectedCoordinate;
                     break;
                 }

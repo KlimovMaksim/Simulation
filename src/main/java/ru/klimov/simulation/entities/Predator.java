@@ -1,7 +1,6 @@
 package ru.klimov.simulation.entities;
 
 import ru.klimov.simulation.Coordinate;
-import ru.klimov.simulation.Map;
 
 public class Predator extends Creature{
     public final int damage = 5;
@@ -9,7 +8,7 @@ public class Predator extends Creature{
     public Predator(Coordinate coordinate) {
         super(coordinate);
         speed = 2;
-        target = Herbivore.class;
+        targetEntity = Herbivore.class;
     }
 
     @Override
