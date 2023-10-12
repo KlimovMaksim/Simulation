@@ -61,6 +61,15 @@ public abstract class Creature extends Entity {
         return result;
     }
 
+    protected void makeOneStep(Map map){
+        Coordinate previousCoordinate = coordinate;
+        Coordinate newCoordinate = findWayToTarget(map).pop();
+        map.setEntity(newCoordinate, this);
+        map.removeEntity(previousCoordinate);
+    }
+
+
+
     private Set<ShiftCoordinate> getEntityMoves(){
         return new HashSet<>(Arrays.asList(
                 new ShiftCoordinate(speed, speed),
