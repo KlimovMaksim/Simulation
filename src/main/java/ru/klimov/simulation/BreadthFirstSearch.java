@@ -61,27 +61,14 @@ public class BreadthFirstSearch {
 
     private void updateDataStructures(Coordinate coordinate){
         for (Coordinate c:
-                selectedCreature.getAvailableMoves(gameMap, startCoordinate)) {
+                selectedCreature.getAvailableMoves(gameMap, coordinate)) {
             searchQueueCoordinates.offerLast(c);
             callTable.putIfAbsent(c, coordinate);
         }
         visitedCoordinates.add(coordinate);
     }
 
-    public Stack<Coordinate> findWayToTarget(){
-        //LinkedList<Coordinate> searchQueueCoordinates = new LinkedList<>();
-        // HashSet<Coordinate> visitedCoordinates = new HashSet<>();
-        // HashMap<Coordinate, Coordinate> callTable = new HashMap<>(); // key - to; value - from
-        // Stack<Coordinate> pathToTarget;
-        // Coordinate startCoordinate = coordinate;
-        // Coordinate endCoordinate = null;
-
-        //for (Coordinate c:
-        //         selectedCreature.getAvailableMoves(gameMap, startCoordinate)) {
-        //     searchQueueCoordinates.offerLast(c);
-        //     callTable.putIfAbsent(c, startCoordinate);
-        // }
-        // visitedCoordinates.add(startCoordinate);
+    public Stack<Coordinate> startSearchEngine(){
         updateDataStructures(startCoordinate);
         while (!searchQueueCoordinates.isEmpty()){
             selectedCoordinate = searchQueueCoordinates.pollFirst();
@@ -91,12 +78,6 @@ public class BreadthFirstSearch {
                     break;
                 }
                 else {
-                    //for (Coordinate c:
-                    //         selectedCreature.getAvailableMoves(gameMap, selectedCoordinate)) {
-                    //     searchQueueCoordinates.offerLast(c);
-                    //     callTable.putIfAbsent(c, selectedCoordinate);
-                    // }
-                    // visitedCoordinates.add(selectedCoordinate);
                     updateDataStructures(selectedCoordinate);
                 }
             }
