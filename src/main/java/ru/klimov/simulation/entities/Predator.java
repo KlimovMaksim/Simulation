@@ -1,6 +1,7 @@
 package ru.klimov.simulation.entities;
 
 import ru.klimov.simulation.Coordinate;
+import ru.klimov.simulation.Map;
 
 public class Predator extends Creature{
     public final int damage = 5;
